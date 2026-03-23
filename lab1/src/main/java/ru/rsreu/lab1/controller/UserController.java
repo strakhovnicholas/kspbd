@@ -2,14 +2,16 @@ package ru.rsreu.lab1.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.rsreu.lab1.entity.AddUserDto;
 import ru.rsreu.lab1.entity.User;
 import ru.rsreu.lab1.service.UserService;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/lab2")
+@RequestMapping("/lab3")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -29,4 +31,8 @@ public class UserController {
         return userService.findSmthUsers(sql);
     }
 
+    @PostMapping("/addUser")
+    public int addUser(@RequestBody AddUserDto dto) throws SQLException {
+        return userService.addUser(dto.login(), dto.name(), dto.role());
+    }
 }

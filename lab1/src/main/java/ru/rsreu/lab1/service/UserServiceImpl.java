@@ -41,7 +41,8 @@ public class UserServiceImpl implements UserService {
         List<Object> users = new ArrayList<>();
         List<Map<String, Object>> objects = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "user", "user")) {
+        try (Connection connection = DriverManager
+                .getConnection("jdbc:postgresql://localhost:5432/postgres", "user", "user")) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 
@@ -89,6 +90,31 @@ public class UserServiceImpl implements UserService {
             return Collections.emptyList();
         }
         return users;
+    }
+
+    @Override
+    public int addUser(String login, String name, String role) throws SQLException {
+        String sql = "call add_user(?, ?, ?, ?)";
+        int id = -1;
+        try (Connection conn = DriverManager
+                .getConnection("jdbc:postgresql://localhost:5432/postgres", "user", "user")) {
+             CallableStatement stmt = conn.prepareCall(sql);
+
+            // Установка параметров (индексация с 1)
+            stmt.setString(1, login);
+            stmt.setString(2, name);
+            stmt.setString(3, role);
+            stmt.registerOutParameter(4, Types.INTEGER);
+            // Выполнение процедуры
+            stmt.execute();
+            id = stmt.getInt(4);
+            System.out.println("Процедура успешно выполнена id пользователя:" + id);
+            return id;
+        } catch (SQLException e) {
+            System.err.println("Ошибка при вызове процедуры: " + e.getMessage());
+            e.printStackTrace();
+            return id;
+        }
     }
 
 }

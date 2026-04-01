@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="users_report"
+              pageWidth="595"
+              pageHeight="842"
+              columnWidth="555"
+              leftMargin="20"
+              rightMargin="20"
+              topMargin="20"
+              bottomMargin="20">
+
+    <!-- СТИЛИ -->
+    <style name="Title" fontSize="18" isBold="true" hTextAlign="Center"/>
+    <style name="Header" mode="Opaque" backcolor="#D3D3D3" isBold="true" hTextAlign="Center" border="Thin"/>
+    <style name="Cell" border="Thin"/>
+
+    <!-- Поля -->
+    <field name="id" class="java.lang.Long"/>
+    <field name="login" class="java.lang.String"/>
+    <field name="name" class="java.lang.String"/>
+    <field name="role" class="java.lang.String"/>
+
+    <!-- ЗАГОЛОВОК -->
+    <title>
+        <band height="60">
+
+            <staticText>
+                <reportElement style="Title" x="0" y="0" width="555" height="30"/>
+                    <text><![CDATA[Lab 4]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="0" y="30" width="555" height="20"/>
+                <textElement textAlignment="Center">
+                    <font size="14"/>
+                </textElement>
+                <text><![CDATA[Users Report]]></text>
+            </staticText>
+
+        </band>
+    </title>
+
+    <!-- HEADER -->
+    <columnHeader>
+        <band height="25">
+
+            <staticText>
+                <reportElement style="Header" x="0" y="0" width="80" height="25"/>
+                <text><![CDATA[ID]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement style="Header" x="80" y="0" width="150" height="25"/>
+                <text><![CDATA[Login]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement style="Header" x="230" y="0" width="150" height="25"/>
+                <text><![CDATA[Name]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement style="Header" x="380" y="0" width="175" height="25"/>
+                <text><![CDATA[Role]]></text>
+            </staticText>
+
+        </band>
+    </columnHeader>
+
+    <!-- ДАННЫЕ -->
+    <detail>
+        <band height="25">
+
+            <textField>
+                <reportElement style="Cell" x="0" y="0" width="80" height="25"/>
+                <textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement style="Cell" x="80" y="0" width="150" height="25"/>
+                <textFieldExpression><![CDATA[$F{login}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement style="Cell" x="230" y="0" width="150" height="25"/>
+                <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement style="Cell" x="380" y="0" width="175" height="25"/>
+                <textFieldExpression><![CDATA[$F{role}]]></textFieldExpression>
+            </textField>
+
+        </band>
+    </detail>
+
+</jasperReport>

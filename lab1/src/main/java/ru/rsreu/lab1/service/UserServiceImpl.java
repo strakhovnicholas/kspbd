@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "user", "user")) {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from users where false = '?'");
+            ResultSet resultSet = statement.executeQuery("select * from users");
 
             while (resultSet.next()) {
 
@@ -71,10 +71,9 @@ public class UserServiceImpl implements UserService {
     public List<User> findUsers(String nameToSearch) {
         List<User> users = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "user", "user")) {
-            PreparedStatement statement = connection.prepareStatement("select * from users where name = ?");
-            statement.setString(1, nameToSearch);
-
+        try (Connection connection = springDataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("select * from users where LOWER(name) like LOWER(?)");
+            statement.setString(1, "%" + nameToSearch + "%");
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
